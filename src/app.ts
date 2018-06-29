@@ -19,6 +19,8 @@ import users from './routes/users';
 import login from './routes/login';
 import logout from './routes/logout';
 import signup from './routes/signup';
+import blog from './routes/blog';
+import article from './routes/article';
 
 //models
 import IUserDocument from './interfaces/IUserDocument';
@@ -91,6 +93,7 @@ passport.serializeUser((user: IUserDocument, done) => {
   done(null, { userId: user.userId, email: user.email });
 });
 
+//serializeUser objにはpssport.serializeUserでシリアライズしたオブジェクトが入る
 passport.deserializeUser((serializeUser: any, done) => {
   User.findOne({ userId: serializeUser.userId }, (err, user: IUserDocument) => {
     done(err, { userId: user.userId, email: user.email });
@@ -108,6 +111,8 @@ app.use('/users', users);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/signup', signup);
+app.use('/blog', blog);
+app.use('/article', article);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
