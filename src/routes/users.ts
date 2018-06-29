@@ -37,7 +37,14 @@ router.post('/', async(req, res, next) => {
       console.error(err);
       next(err);
     } else {
-      res.redirect('/secure');
+      /*
+      req.login(result, (err) => {
+        if(err) return next(err);
+        return res.redirect('/secret');
+      });
+      */
+     req.flash('info', 'signup success, now you can login from here.')
+     res.redirect('/login');
     }
   });
 

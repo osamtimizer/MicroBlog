@@ -91,8 +91,8 @@ passport.serializeUser((user: IUserDocument, done) => {
   done(null, { userId: user.userId, email: user.email });
 });
 
-passport.deserializeUser((serializeUser, done) => {
-  User.findOne({ userId: serializeUser }, (err, user: IUserDocument) => {
+passport.deserializeUser((serializeUser: any, done) => {
+  User.findOne({ userId: serializeUser.userId }, (err, user: IUserDocument) => {
     done(err, { userId: user.userId, email: user.email });
   });
 });
@@ -100,6 +100,7 @@ passport.deserializeUser((serializeUser, done) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
+//using this middleware, req obj will hold a flash property.
 app.use(flash());
 
 app.use('/', index);
