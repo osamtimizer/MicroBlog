@@ -21,25 +21,30 @@ router.get('/', function (req, res, next) {
 //Create
 router.post('/', async(req, res, next) => {
 
-  //TODO: password must be hashed.
-  let hashed = '';
-
-  const newUser: IUserDocument = new User({
+  const userModel = mongoose.model('User');
+  const newUser: IUserDocument = <IUserDocument>new userModel({
+    userId: req.body.userId,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-    password: hashed,
+    password: req.body.password,
     created_at: new Date(),
     updated_at: new Date()
   });
 
-  const result = await newUser.save();
-
+  newUser.save((err, result) => {
+    if (err) {
+      console.error(err);
+      next(err);
+    } else {
+      res.redirect('/secure');
+    }
+  });
 
 });
 
 //Read
-router.get('/:userId', async(req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   const result = await User.find({ _uid: req.body.uid });
   if (result.length === 1) {
     return res.send(JSON.stringify(result[0]));
