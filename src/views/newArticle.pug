@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    .container
+        form(action='/article' method='post')
+            input(type='text' name='title' placeholder='title')
+            input(type='text' name='tag' placeholder='please devide each tag by ","')
+            textarea(name='content' placeholder='write your article here...')
+            input(type='submit' value='submit')

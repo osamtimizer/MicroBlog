@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    if user
+        a(href="/article") Home 
+        a(href="/blog/newArticle") Create Article 
+        a(href="/logout") logout
+    else
+        a(href="/") Top Page 
+        a(href="/login") login

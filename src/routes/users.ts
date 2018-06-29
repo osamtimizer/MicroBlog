@@ -1,11 +1,12 @@
 import express from 'express';
-import redis from 'redis'
-import mongoose from 'mongoose'
+import redis from 'redis';
+import mongoose from 'mongoose';
+import authenticate from '../modules/Authenticator';
 
-import IUserDocument from '../interfaces/IUserDocument'
-import User from '../models/user'
+import IUserDocument from '../interfaces/IUserDocument';
+import User from '../models/user';
 
-const redisUrl = 'redis://localhost:6379'
+const redisUrl = 'redis://localhost:6379';
 const client = redis.createClient(redisUrl);
 
 var router = express.Router();
@@ -18,8 +19,21 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get('/:userId', authenticate, async(req, res, next) => {
+  if (!req.user) {
+    req.flash('error', 'user not found');
+    return res.redirect('login');
+  }
+
+  const target = req.params.userId;
+  const query = User.findOne({ userId: target });
+  query.exec((err, result) => {
+    res.render('userProfile', { user: result, follows:{}, followers: {} });
+  })
+});
+
 //Create
-router.post('/', async(req, res, next) => {
+router.post('/', async (req, res, next) => {
 
   const userModel = mongoose.model('User');
   const newUser: IUserDocument = <IUserDocument>new userModel({
@@ -43,8 +57,8 @@ router.post('/', async(req, res, next) => {
         return res.redirect('/secret');
       });
       */
-     req.flash('info', 'signup success, now you can login from here.')
-     res.redirect('/login');
+      req.flash('info', 'signup success, now you can login from here.')
+      res.redirect('/login');
     }
   });
 

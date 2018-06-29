@@ -1,0 +1,17 @@
+extends layout
+
+block content
+    include header
+    h.title= title
+    div.container
+        p#userId UserID: #{user.userId}
+        p#name UserName: #{user.firstName} #{user.lastName}
+        div#followInfo
+            h following users
+            ul#follows
+                each f_user in follows
+                    li.follow #{f_user.userId}
+            h followed users
+            ul#followers
+                each f_user in followers
+                    li.follower #{f_user.userId}

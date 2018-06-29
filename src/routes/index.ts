@@ -1,5 +1,6 @@
 import express from 'express';
-import passport from 'passport'
+import passport from 'passport';
+import authenticate from '../modules/Authenticator'
 var router = express.Router();
 
 /* GET home page. */
@@ -7,8 +8,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-
-router.get('/secret', authenticator, (req, res, next) => {
+router.get('/secret', authenticate, (req, res, next) => {
   let username = '';
   let email = '';
   if (req.user) {
@@ -22,13 +22,5 @@ router.get('/secret', authenticator, (req, res, next) => {
   });
 });
 
-function authenticator(req, res: express.Response, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    req.flash('error', 'login required.');
-    res.redirect('/login');
-  }
-}
 
 export default router;

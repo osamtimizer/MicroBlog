@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    include header
+    .container
+        each article in articles
+            .article
+                h#title Title:#{article.title}
+                p#tag Tag:#{article.tag}
+                p#content Content:#{article.content}
+                p#date Posted Date:#{article.created_at}
+                p#author Posted by:#{article.user.userId}
+                br
+
+        
