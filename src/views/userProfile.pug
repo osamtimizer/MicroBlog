@@ -7,6 +7,11 @@ block content
         p#userId UserID: #{user.userId}
         p#name UserName: #{user.firstName} #{user.lastName}
         div#followInfo
+            if !isMypage
+                div#followbuttons
+                    form(action='/follow' method="POST")
+                        input(type="hidden" name="userId" value=user.userId)
+                        input(type="submit" value="Follow")
             h following users
             ul#follows
                 each f_user in follows

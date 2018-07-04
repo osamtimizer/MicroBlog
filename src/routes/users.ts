@@ -24,11 +24,15 @@ router.get('/:userId', authenticate, async(req, res, next) => {
     req.flash('error', 'user not found');
     return res.redirect('login');
   }
+  const myId = req.user.userId;
 
   const target = req.params.userId;
   const query = User.findOne({ userId: target });
   query.exec((err, result) => {
-    res.render('userProfile', { user: result, follows:{}, followers: {} });
+    const isMypage: boolean = myId === target ? true : false;
+    //TODO: fetch user relation whether this user has been already followed.
+    //const isFollowing = true;
+    res.render('userProfile', { user: result, isMypage: isMypage, follows: {}, followers: {} });
   })
 });
 
@@ -65,6 +69,7 @@ router.post('/', async (req, res, next) => {
 });
 
 //Read
+/*
 router.get('/:userId', async (req, res, next) => {
   const result = await User.find({ _uid: req.body.uid });
   if (result.length === 1) {
@@ -73,6 +78,7 @@ router.get('/:userId', async (req, res, next) => {
 
   res.send('no user found');
 });
+*/
 
 //Update
 router.put('/:userId', (req, res, next) => {

@@ -21,6 +21,7 @@ import logout from './routes/logout';
 import signup from './routes/signup';
 import blog from './routes/blog';
 import article from './routes/article';
+import userRelation from './routes/userRelations';
 
 //models
 import IUserDocument from './interfaces/IUserDocument';
@@ -113,6 +114,7 @@ app.use('/logout', logout);
 app.use('/signup', signup);
 app.use('/blog', blog);
 app.use('/article', article);
+app.use('/follow', userRelation);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
