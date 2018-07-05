@@ -41,7 +41,9 @@
     "shelljs": "^0.8.2",
     "ts-node": "^7.0.0",
     "typescript": "^2.9.2",
-    "typings": "^2.1.1"
+    "typings": "^2.1.1",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8"
   },
   "devDependencies": {}
 }
